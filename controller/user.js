@@ -1,6 +1,9 @@
-const fs = require('fs');
+const fs = require("fs");
 // const index = fs.readFileSync('index.html', 'utf-8');
-const data = JSON.parse(fs.readFileSync('data.json', 'utf-8'));
+const path = require("path");
+const data = JSON.parse(
+  fs.readFileSync(path.resolve(__dirname, "data.json"), "utf-8")
+);
 const users = data.users;
 
 const createUser = (req, res) => {
@@ -23,7 +26,7 @@ const replaceUser = (req, res) => {
   const id = +req.params.id;
   const userIndex = users.findIndex((u) => u.id === id);
   users.splice(userIndex, 1, { ...req.body, id });
-  res.status(201).json({ user: 'updated' });
+  res.status(201).json({ user: "updated" });
 };
 
 const updateUser = (req, res) => {
@@ -31,7 +34,7 @@ const updateUser = (req, res) => {
   const userIndex = users.findIndex((u) => u.id === id);
   const user = users[userIndex];
   users.splice(userIndex, 1, { ...user, ...req.body });
-  res.status(201).json({ user: 'updated' });
+  res.status(201).json({ user: "updated" });
 };
 
 const deleteUser = (req, res) => {
@@ -39,7 +42,7 @@ const deleteUser = (req, res) => {
   const userIndex = users.findIndex((u) => u.id === id);
   const user = users[userIndex];
   users.splice(userIndex, 1);
-  res.status(201).json({ type: 'DELETE', user });
+  res.status(201).json({ type: "DELETE", user });
 };
 
 module.exports = {
